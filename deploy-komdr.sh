@@ -28,7 +28,7 @@ echo "
 # ==================================== Obtain AWS Credentials ========================================== #
 eval $(maws li "$MAWS_ACCOUNT")
 
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 -i $cert_path ubuntu@$host << HEREDOC    
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << HEREDOC    
     if [ -e ~/kubectl ]; then
         sudo mv ~/kubectl //usr/local/bin/kubectl
     fi

@@ -23,7 +23,7 @@ eval $(maws li "$MAWS_ACCOUNT")
 
 
 # ==================================== Deploy Cluster ============================================= #
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 -i $cert_path -t ubuntu@$host << HEREDOC
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@$host << HEREDOC
     cd ~/kaptain
 
     sudo usermod -aG docker ubuntu
