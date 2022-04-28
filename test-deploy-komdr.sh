@@ -3,6 +3,9 @@
 # please move config-vars.sh to your desktop or modify this route:
 . ~/Desktop/config-vars.sh
 
+# check for AWS_EXPIRATION, and GPU_ENABLED variables
+aws_expiration=${AWS_EXPIRATION:-10h}
+gpu_enabled=${GPU_ENABLED:-false}
 host=$(cat inventory | grep -Po "(.*)amazonaws\.com")  # Get Host from inventory file
 cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")  # Get current cer file from inventory file
 
@@ -14,6 +17,10 @@ if [ -z "$MAWS_ACCOUNT" ]; then
 fi
 
 echo "
+    AWS owner: ${AWS_OWNER}
+    AWS expiration: ${aws_expiration}
+    AWS account: ${MAWS_ACCOUNT}
+    GPU enabled: ${gpu_enabled}
     Host: ${host}
     Key file: ${cert_path}
     "
@@ -21,17 +28,18 @@ echo "
 # ==================================== Obtain AWS Credentials ========================================== #
 eval $(maws li "$MAWS_ACCOUNT")
 
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << HEREDOC    
+    if [ -e ~/kubectl ]; then
+        sudo mv ~/kubectl //usr/local/bin/kubectl
+    fi
 
-# ==================================== Deploy Cluster ============================================= #
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@$host << HEREDOC
     cd ~/kaptain
 
     sudo usermod -aG docker ubuntu
     newgrp docker
 
-    export KUBECONFIG=\$(find ~/kaptain -maxdepth 1 -name 'kaptain-*.conf' | awk -F/ '{ print }')
-    
-    make install
-HEREDOC
+    make clean-all
 
-exit 0
+    export AWS_EXPIRATION=$aws_expiration GPU_ENABLED=$gpu_enabled AWS_OWNER="$AWS_OWNER"
+    echo \$GPU_ENABLED
+HEREDOC

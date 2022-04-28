@@ -14,7 +14,7 @@ git_email=${GIT_EMAIL}
 yellow='\033[1;33m'
 nc='\033[0m'
 
-if [ -z "${git_user}"] || [-z "${git_email}"]; then
+if [ -z "${git_user}" ] || [ -z "${git_email}" ]; then
     echo -e "\n${yellow}Please export GIT_USER and GIT_EMAIL to configure in remote machine${nc}\n"
     exit 1
 else
@@ -47,6 +47,10 @@ echo Checkout the repo
 # this next line is ugly but it works, so I will leave it as it is for now
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file' && git clone --recursive '$github_repo
 
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "sudo mv ~/kubectl //usr/local/bin/"
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << EOF    
+    if [ -e ~/kubectl ]; then
+        sudo mv ~/kubectl //usr/local/bin/kubectl
+    fi
+EOF
 
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git config --global user.name $git_user && git config --global user.email $git_email"

@@ -3,19 +3,11 @@
 # please move config-vars.sh to your desktop or modify this route:
 . ~/Desktop/config-vars.sh
 
-all_arguments=$@
-
 terraform init
 
 eval $(maws li "$MAWS_ACCOUNT")
 
 terraform apply -var owner="$AWS_OWNER"
-
-#Get current cer file from inventory file
-cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")
-
-#Get Host from inventory file
-host=$(cat inventory | grep -Po "(.*)amazonaws\.com")
 
 all_arguments=$@
 

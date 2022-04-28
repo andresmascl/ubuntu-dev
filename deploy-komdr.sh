@@ -28,11 +28,7 @@ echo "
 # ==================================== Obtain AWS Credentials ========================================== #
 eval $(maws li "$MAWS_ACCOUNT")
 
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << HEREDOC    
-    if [ -e ~/kubectl ]; then
-        sudo mv ~/kubectl //usr/local/bin/kubectl
-    fi
-
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << EOF    
     cd ~/kaptain
 
     sudo usermod -aG docker ubuntu
@@ -40,13 +36,15 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$ho
 
     make clean-all
 
-    export AWS_EXPIRATION="$aws_expiration" GPU_ENABLED="$gpu_enabled" AWS_OWNER="$AWS_OWNER"
-
     ~/kaptain/tools/dkp/dkp.sh delete bootstrap
+    
+    export AWS_EXPIRATION=$aws_expiration 
+    export AWS_OWNER="$AWS_OWNER"    
     
     unset KUBECONFIG
     
-    make cluster-create
+    echo "running make cluster-create kommander -install"
+    make cluster-create kommander-install GPU_ENABLED=false
+EOF
 
-    make kommander-install
-HEREDOC
+exit 0
