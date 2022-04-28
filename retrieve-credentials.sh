@@ -3,9 +3,9 @@
 
 
 #==================================== Default Variables ==========================================#
-cert_path=$(cat inventory | ggrep -Po "(?<==).*\.pem")
+cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")
 # Get Host from inventory file
-host=$(cat inventory | ggrep -Po "(.*)amazonaws\.com")
+host=$(cat inventory | grep -Po "(.*)amazonaws\.com")
 
 
 
@@ -17,8 +17,8 @@ ssh -T -i $cert_path ubuntu@$host << HEREDOC
               
 
     "
-    cd ~/kudo-kubeflow/
-    export KUBECONFIG=\$(find ~/kudo-kubeflow -maxdepth 1 -name 'kaptain-*.conf' | awk -F/ '{ print }')
+    cd ~/kaptain
+    export KUBECONFIG=\$(find ~/kaptain -maxdepth 1 -name 'kaptain-*.conf' | awk -F/ '{ print }')
     export KAPTAIN_URL=\$(kubectl get svc kaptain-ingress --namespace kaptain-ingress -o jsonpath="{.status.loadBalancer.ingress[*].hostname}")
     
     echo "
