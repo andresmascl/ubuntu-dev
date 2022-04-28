@@ -17,6 +17,7 @@ if [ -z "$MAWS_ACCOUNT" ]; then
 fi
 
 echo "
+    AWS owner: ${AWS_OWNER}
     AWS expiration: ${aws_expiration}
     AWS account: ${MAWS_ACCOUNT}
     GPU enabled: ${gpu_enabled}
@@ -39,7 +40,7 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 -i $cert_path ubuntu@$ho
 
     make clean-all
 
-    export aws_expiration="$aws_expiration" gpu_enabled="$gpu_enabled"
+    export AWS_EXPIRATION="$aws_expiration" GPU_ENABLED="$gpu_enabled" AWS_OWNER="$AWS_OWNER"
 
     ~/kaptain/tools/dkp/dkp.sh delete bootstrap
     
