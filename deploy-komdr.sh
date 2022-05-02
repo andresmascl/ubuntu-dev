@@ -38,13 +38,14 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$ho
 
     ~/kaptain/tools/dkp/dkp.sh delete bootstrap
     
-    export AWS_EXPIRATION=$aws_expiration 
-    export AWS_OWNER="$AWS_OWNER"    
-    
+    export AWS_EXPIRATION="$aws_expiration"
+    export AWS_OWNER="$AWS_OWNER"
+    export GPU_ENABLED="$gpu_enabled"
+
     unset KUBECONFIG
     
     echo "running make cluster-create kommander -install"
-    make cluster-create kommander-install GPU_ENABLED=false
+    make cluster-create kommander-install 
 EOF
 
 exit 0

@@ -35,3 +35,15 @@ Kommander Credentials:"
     make kommander-credentials
     echo ""
 HEREDOC
+
+echo "
+
+SSH connection:
+
+
+"
+
+echo "ssh -i $(pwd)/$cert_path ubuntu@$host"
+
+
+exit 0

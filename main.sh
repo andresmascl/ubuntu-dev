@@ -14,21 +14,37 @@ all_arguments=$@
 retrieve_credentials=false
 for i in $@
 do
+    if [ "$i" == 'local-setup' ]; then
+        echo '========== Local setup =============='
+        ./local-setup.sh
+    fi
+done
+
+for i in $@
+do
     if [ "$i" == 'deploy-komdr' ]; then
         echo '========== Local setup =============='
         ./local-setup.sh
 
         echo '========== Deploying Komdr =========='
         ./deploy-komdr.sh
+
         retrieve_credentials=true
     fi
 done
 
 for i in $@
 do
-    if [ "$i" == 'deploy-kapt' ]; then
-        echo '========== Deploying Kapt ==========='
-        ./deploy-kapt.sh
+    if [ "$i" == 'install-kapt' ]; then
+        echo '========== Local setup =============='
+        ./local-setup.sh
+
+        echo '========== Deploying Komdr =========='
+        ./deploy-komdr.sh
+        
+        echo '========== Installing Kapt ==========='
+        ./install-kapt.sh
+
         retrieve_credentials=true
     fi
 done
