@@ -42,10 +42,19 @@ scp -i $cert_path ${github_cert_path} ubuntu@$host:~/.ssh/
 # Add Public Key to known_hosts
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "ssh-keyscan github.com >> ~/.ssh/known_hosts"
 
+# add certificate to ssh-agent
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file
+
+
 echo Checkout the repo
 
-# this next line is ugly but it works, so I will leave it as it is for now
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file' && git clone --recursive '$github_repo
+if [ -z "$GITHUB_BRANCH" ] ; then
+    # this next line is ugly but it works, so I will leave it as it is for now
+    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'git clone --recursive '$github_repo
+else
+    # this line clones the specified branch of the repository
+    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'git clone -b '$GITHUB_BRANCH' --recursive '$github_repo
+
 
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << EOF    
     if [ -e ~/kubectl ]; then
