@@ -43,17 +43,20 @@ scp -i $cert_path ${github_cert_path} ubuntu@$host:~/.ssh/
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "ssh-keyscan github.com >> ~/.ssh/known_hosts"
 
 # add certificate to ssh-agent
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file
+#ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file
 
 
 echo Checkout the repo
 
+
 if [ -z "$GITHUB_BRANCH" ] ; then
     # clone the main branch
-    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git clone --recursive $github_repo"
+    # todo: fix this ugly line
+    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file" && git clone --recursive $github_repo"
 else
     # clone the specified branch of the repository
-    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git clone -b $GITHUB_BRANCH --recursive $github_repo"
+    # todo: fix this ugly line
+    ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file" && git clone -b $GITHUB_BRANCH --recursive $github_repo"
 fi
 
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$host << EOF    
