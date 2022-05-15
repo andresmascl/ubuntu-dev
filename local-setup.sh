@@ -43,16 +43,16 @@ scp -i $cert_path ${github_cert_path} ubuntu@$host:~/.ssh/
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "ssh-keyscan github.com >> ~/.ssh/known_hosts"
 
 # add certificate to ssh-agent
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "eval "$(ssh-agent -s)" && ssh-add ~/.ssh/$github_cert_file"
+ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file
 
 
 echo Checkout the repo
 
 if [ -z "$GITHUB_BRANCH" ] ; then
-    # this next line is ugly but it works, so I will leave it as it is for now
+    # clone the main branch
     ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git clone --recursive $github_repo"
 else
-    # this line clones the specified branch of the repository
+    # clone the specified branch of the repository
     ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git clone -b $GITHUB_BRANCH --recursive $github_repo"
 fi
 
