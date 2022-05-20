@@ -3,6 +3,9 @@
 # please move config-vars.sh to your desktop or modify this route:
 . ~/Desktop/config-vars.sh
 
+dkp_version=${DKP_VERSION:-v2.2.0}
+kommander_version=${KOMMANDER_VERSION:-v2.2.0}
+
 host=$(cat inventory | grep -Po "(.*)amazonaws\.com")  # Get Host from inventory file
 cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")  # Get current cer file from inventory file
 
@@ -30,8 +33,12 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@
     newgrp docker
 
     export KUBECONFIG=\$(find ~/kaptain -maxdepth 1 -name 'kaptain-*.conf' | awk -F/ '{ print }')
-    
-    make install
+
+    export KOMMANDER_VERSION="$kommander_version"
+    export DKP_VERSION="$dkp_version"
+
+    make install 
+
 HEREDOC
 
 exit 0
