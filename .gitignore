@@ -20,3 +20,5 @@ a2295590-inviting-giraffe-dev-key-pair.pem
 test.sh
 secrets.txt
 test-deploy-komdr
+
+Makefile

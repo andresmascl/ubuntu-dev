@@ -6,65 +6,34 @@ Requires Terraform v0.13.7. Use (tfenv)[https://github.com/tfutils/tfenv] for in
 ## Creation
 Edit the `terraform.tfvars` file and adjust the instance_type values.
 
-To install apply the terraform files. This will generate a key pair and create the machine.
-
 Create a [github certificate](https://docs.github.com/en/enterprise-server@3.2/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
-### Set path for the GitHub private key and repo to clone
+Edit the `config-vars.sh` file and complete with your info:
+- `GITHUB_CERT_PATH=~/.ssh/<name_of_my_cert>`  # << no `.pub` here
+- `GITHUB_REPO=git@github.com:<path-to-my-repo.git>`
+- ...etc.
 
+Put the `config-vars.sh` file on your desktop
+
+### 5 commands:
 ``` shell
-export GITHUB_CERT_PATH=~/.ssh/<name_of_my_cert>  # no .pub here
-export GITHUB_REPO=git@github.com:<path-to-my-repo.git>
-```
+# installing dependencies and cloning repository
+./main.sh
 
-### Initiate Terraform
-``` shell
-terraform init
-```
+# the above plus deploying a kommander cluster
+./main.sh deploy-kommander
 
-### Make sure you have logged in AWS recently
-``` shell
-eval $(maws li <somelongnumber-Someaws_Accountname>)
-```
+# the above plus installing kaptain
+./main.sh install-kaptain
 
-### Start the dev machine
-``` shell
-terraform apply -var owner="$(whoami)"
-```
+# retrieve credentials for the SSH connection, Kommander UI, and Kaptain UI
+./retrieve-credentials.sh
 
-The command will output the public dns of the machine as well as an SSH connection string. It is recommended to use tmux to prevent commands from failing due to connection.
-
-### To connect with ssh
-
-``` shell
+# create an SSH connection
 ./connect.sh
 ```
 
-### Set up repo and dev env
-
-``` shell
-# Run script to checkout dev repo and set env vars
-./local-setup.sh
-```
-
-### Login to DockerHub
-``` shell
-docker login
-# You'll have to enter credentials
-```
-
-### Deploy the default version of a cluster
-``` shell
-# You can specify EXPIRATION_TIME providing an integer.  Default is 12 hours
-./deploy-kappy.sh
-```
-
-### Obtain credentials after deployment:
-``` shell
-./retrieve-credentials.sh
-```
-
-
+# Expert level stuff:
 ## Multiple Workspaces
 You can create multiple machines this way:
 
