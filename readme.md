@@ -10,7 +10,7 @@ Create a [github certificate](https://docs.github.com/en/enterprise-server@3.2/a
 
 Edit the `config-vars.sh` file and complete with your info:
 - `GITHUB_CERT_PATH=~/.ssh/<name_of_my_cert>`  # << no `.pub` here
-- `GITHUB_REPO=git@github.com:<path-to-my-repo.git>`
+- `GITHUB_REPO=git@github.com:<path-to-my-repo>.git`
 - ...etc.
 
 Put the `config-vars.sh` file on your desktop
