@@ -29,7 +29,7 @@ Put the `config-vars.sh` file on your desktop
 # retrieve credentials for the SSH connection, Kommander UI, and Kaptain UI
 ./retrieve-credentials.sh
 
-# connect vis an SSH connection
+# connect via an SSH connection
 ./connect.sh
 ```
 
