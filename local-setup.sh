@@ -63,6 +63,10 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$ho
     if [ -e ~/kubectl ]; then
         sudo mv ~/kubectl //usr/local/bin/kubectl
     fi
+    sudo curl -OL https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz
+    sudo tar -zxvf k9s_Linux_x86_64.tar.gz k9s
+    sudo rm k9s_Linux_x86_64.tar.gz
+    sudo mv ~/k9s //usr/local/bin/k9s
 EOF
 
 ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host "git config --global user.name $git_user && git config --global user.email $git_email"
