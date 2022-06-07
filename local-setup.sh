@@ -2,8 +2,8 @@
 
 # Connects to the newly created EC2 machine and clones script from github
 
-# please move config-vars.sh to your desktop or modify this route:
-. ~/Desktop/config-vars.sh
+./config-vars.sh
+
 
 github_cert_path=${GITHUB_CERT_PATH:-~/.ssh/linux_cloud_dev_ed25519}
 github_cert_file=$(basename $github_cert_path)
