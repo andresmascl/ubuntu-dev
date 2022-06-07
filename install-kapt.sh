@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# please move config-vars.sh to your desktop or modify this route:
-. ~/Desktop/config-vars.sh
+./config-vars.sh
+
 
 dkp_version=${DKP_VERSION:-v2.2.0}
 kommander_version=${KOMMANDER_VERSION:-v2.2.0}

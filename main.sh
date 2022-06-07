@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# please move config-vars.sh to your desktop or modify this route:
-. ~/Desktop/config-vars.sh
+./config-vars.sh
+
 
 terraform init
 

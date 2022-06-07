@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# please move config-vars.sh to your desktop or modify this route:
-. ~/Desktop/config-vars.sh
+./config-vars.sh
 
 # check for AWS_EXPIRATION, and GPU_ENABLED variables
 aws_expiration=${AWS_EXPIRATION:-10h}
