@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./config-vars.sh
+. config-vars.sh
 
 # check for AWS_EXPIRATION, and GPU_ENABLED variables
 aws_expiration=${AWS_EXPIRATION:-10h}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./config-vars.sh
+. config-vars.sh
 
 
 dkp_version=${DKP_VERSION:-v2.2.0}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./config-vars.sh
+. config-vars.sh
 
 
 terraform init
