@@ -49,6 +49,8 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$ho
     export GPU_ENABLED="$gpu_enabled"
     export KOMMANDER_VERSION="$kommander_version"
     export DKP_VERSION="$dkp_version"
+    export DOCKER_USERNAME="$DOCKER_USER"
+    export DOCKER_PASSWORD="$DOCKER_PASS"
     
     echo "spinning up the kommander cluster"
     make cluster-create kommander-install 
