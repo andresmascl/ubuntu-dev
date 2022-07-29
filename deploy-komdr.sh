@@ -5,8 +5,8 @@
 # check for AWS_EXPIRATION, and GPU_ENABLED variables
 aws_expiration=${AWS_EXPIRATION:-10h}
 gpu_enabled=${GPU_ENABLED:-false}
-dkp_version=${DKP_VERSION:-v2.2.0}
-kommander_version=${KOMMANDER_VERSION:-v2.2.0}
+dkp_version=${DKP_VERSION}
+kommander_version=${KOMMANDER_VERSION}
 
 host=$(cat inventory | grep -Po "(.*)amazonaws\.com")  # Get Host from inventory file
 cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")  # Get current cer file from inventory file
@@ -47,13 +47,12 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path ubuntu@$ho
     export AWS_EXPIRATION="$aws_expiration"
     export AWS_OWNER="$AWS_OWNER"
     export GPU_ENABLED="$gpu_enabled"
-    export KOMMANDER_VERSION="$kommander_version"
-    export DKP_VERSION="$dkp_version"
     export DOCKER_USERNAME="$DOCKER_USER"
     export DOCKER_PASSWORD="$DOCKER_PASS"
     
     echo "spinning up the kommander cluster"
-    make cluster-create kommander-install 
+    make cluster-create DKP_VERSION="$dkp_version"
+    make kommander-install DKP_VERSION="$dkp_version" KOMMANDER_VERSION="$kommander_version"
 EOF
 
 exit 0

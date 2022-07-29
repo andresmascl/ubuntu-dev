@@ -3,8 +3,8 @@
 . config-vars.sh
 
 
-dkp_version=${DKP_VERSION:-v2.2.0}
-kommander_version=${KOMMANDER_VERSION:-v2.2.0}
+dkp_version=${DKP_VERSION}
+kommander_version=${KOMMANDER_VERSION}
 
 host=$(cat inventory | grep -Po "(.*)amazonaws\.com")  # Get Host from inventory file
 cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")  # Get current cer file from inventory file
@@ -37,7 +37,9 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@
     export KOMMANDER_VERSION="$kommander_version"
     export DKP_VERSION="$dkp_version"
 
-    make install 
+    make install DKP_VERSION="$dkp_version" KOMMANDER_VERSION="$kommander_version"
+
+    sudo copy ~/kaptain/tools/dkp/dkp.sh //usr/local/bin/dkp.sh
 
 HEREDOC
 
