@@ -36,7 +36,8 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@
 
     export KOMMANDER_VERSION="$kommander_version"
     export DKP_VERSION="$dkp_version"
-
+    docker login --username=$DOCKER_USER --password=$DOCKER_PASS 
+    
     make install DKP_VERSION="$dkp_version" KOMMANDER_VERSION="$kommander_version"
 
     sudo copy ~/kaptain/tools/dkp/dkp.sh //usr/local/bin/dkp.sh
