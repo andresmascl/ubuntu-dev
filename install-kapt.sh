@@ -5,6 +5,7 @@
 
 dkp_version=${DKP_VERSION}
 kommander_version=${KOMMANDER_VERSION}
+kaptain_chart_version=${KAPTAIN_CHART_VERSION}
 
 host=$(cat inventory | grep -Po "(.*)amazonaws\.com")  # Get Host from inventory file
 cert_path=$(cat inventory | grep -Po "(?<==).*\.pem")  # Get current cer file from inventory file
@@ -35,10 +36,11 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=50 -i $cert_path -t ubuntu@
     export KUBECONFIG=\$(find ~/kaptain -maxdepth 1 -name 'kaptain-*.conf' | awk -F/ '{ print }')
 
     export KOMMANDER_VERSION="$kommander_version"
+    export KAPTAIN_CHART_VERSION="$kaptain_chart_version"
     export DKP_VERSION="$dkp_version"
     docker login --username=$DOCKER_USER --password=$DOCKER_PASS 
     
-    make install DKP_VERSION="$dkp_version" KOMMANDER_VERSION="$kommander_version"
+    make install DKP_VERSION="$dkp_version" KOMMANDER_VERSION="$kommander_version" KAPTAIN_CHART_VERSION="$kaptain_chart_version"
 
     sudo copy ~/kaptain/tools/dkp/dkp.sh //usr/local/bin/dkp.sh
 
