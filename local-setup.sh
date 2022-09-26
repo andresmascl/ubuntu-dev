@@ -51,11 +51,11 @@ echo Checkout the repo
 
 if [ -z "$GITHUB_BRANCH" ] ; then
     # clone the main branch
-    # todo: fix this ugly line
+    # TODO: beautify this ugly line
     ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file" && git clone --recursive $github_repo"
 else
     # clone the specified branch of the repository
-    # todo: fix this ugly line
+    # TODO: beautify this ugly line
     ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -i $cert_path ubuntu@$host 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/'$github_cert_file" && git clone -b $GITHUB_BRANCH --recursive $github_repo"
 fi
 

@@ -13,14 +13,14 @@ all_arguments=$@
 
 retrieve_credentials=false
 
-echo '========== Local setup =============='
+echo '========== Local setup... =============='
 ./local-setup.sh
 
 for i in $@
 do
     if [ "$i" == 'deploy-kommander' ]; then
 
-        echo '========== Deploying Kommander =========='
+        echo '========== Deploying Kommander... =========='
         ./deploy-komdr.sh
 
         retrieve_credentials=true
@@ -31,10 +31,10 @@ for i in $@
 do
     if [ "$i" == 'install-kaptain' ]; then
 
-        echo '========== Deploying Kommander =========='
+        echo '========== Deploying Kommander... =========='
         ./deploy-komdr.sh
         
-        echo '========== Installing Kaptain ==========='
+        echo '========== Installing Kaptain... ==========='
         ./install-kapt.sh
 
         retrieve_credentials=true
